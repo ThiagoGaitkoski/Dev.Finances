@@ -40,13 +40,21 @@ const transactions = [
 
 const Transaction = {
     incomes(){
+        let income = 0;
 
+        transactions.forEach(transaction => {
+            if(transaction.amount > 0){
+                income = income + transaction.amount;
+            }
+        })
+
+        return income;
     },
     expenses(){
-
+        return "Aqui"
     },
     total(){
-
+        return "SLA"
     }
 }
 
@@ -65,22 +73,40 @@ const DOM = {
 
         const html = `
             <td class="description">${transaction.description}</td>
-            <td class="${CSSclass}">${transaction.amount}</td>
+            <td class="${CSSclass}">${amount}</td>
             <td class="date">${transaction.date}</td>
             <td>
                 <img src="./assets/minus.svg" alt="Remover transação">
             </td>
         `
         return html
+    },
+
+    updateBalance(){
+        document.getElementById('incomeDisplay').innerHTML = Transaction.incomes();
+        document.getElementById('expenseDisplay').innerHTML = Transaction.expenses();
+        document.getElementById('totalDisplay').innerHTML = Transaction.total();
     }
 }
 
 const Utils = {
     formatCurrency(value){
         const signal = Number(value) < 0 ? "-" : "";
+        value = String(value).replace(/\D/g, "");
+        value = Number(value) / 100;
+        value = value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+
+        return signal + value;
     }
 }
 
 transactions.forEach(function(transaction){
     DOM.addTransaction(transaction)
 })
+
+DOM.updateBalance();
+
+1:26:05
