@@ -39,22 +39,37 @@ const transactions = [
 ]
 
 const Transaction = {
+    all: transactions,
+    
+    add(transaction){
+        Transaction.all.push(transaction);
+
+        App.reload();
+    },
     incomes(){
         let income = 0;
 
-        transactions.forEach(transaction => {
+        Transaction.all.forEach(transaction => {
             if(transaction.amount > 0){
-                income = income + transaction.amount;
+                income += transaction.amount;
             }
         })
 
         return income;
     },
     expenses(){
-        return "Aqui"
+        let expense = 0;
+
+        Transaction.all.forEach(transaction => {
+            if(transaction.amount < 0){
+                expense += transaction.amount;
+            }
+        })
+
+        return expense;
     },
     total(){
-        return "SLA"
+        return Transaction.incomes() + Transaction.expenses();
     }
 }
 
@@ -83,9 +98,12 @@ const DOM = {
     },
 
     updateBalance(){
-        document.getElementById('incomeDisplay').innerHTML = Transaction.incomes();
-        document.getElementById('expenseDisplay').innerHTML = Transaction.expenses();
-        document.getElementById('totalDisplay').innerHTML = Transaction.total();
+        document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(Transaction.incomes());
+        document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(Transaction.expenses());
+        document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(Transaction.total());
+    },
+    clearTransactions(){
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
@@ -103,10 +121,25 @@ const Utils = {
     }
 }
 
-transactions.forEach(function(transaction){
-    DOM.addTransaction(transaction)
+const App = {
+    init(){
+        Transaction.all.forEach(transaction =>{
+            DOM.addTransaction(transaction)
+        })
+        
+        DOM.updateBalance();
+
+    },
+    reload(){
+        DOM.clearTransactions;
+        App.init();
+    },
+}
+
+App.init;
+Transaction.add({
+    id: 9,
+    description: 'Alo',
+    amount: 14459,
+    date: '23/02/2021'
 })
-
-DOM.updateBalance();
-
-1:26:05
