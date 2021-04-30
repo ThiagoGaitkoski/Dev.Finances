@@ -121,14 +121,36 @@ const Utils = {
 }
 
 const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValues(){
+        return{
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+    validateFields(){
+        const { description, amount, date } = Form.getValues();
+        
+        if(description.trim() === "" || amount.trim() === "" || date.trim() === ""){
+            throw new Error("Por Favor, preencha todos os campos")
+        }
+    },
+    formatValues(){
+        let { description, amount, date } = Form.getValues();
+    },
     submit(event){
         event.preventDefault();
-        //Validate informations
-        //Format data to save
-        //Save
-        //Delete data of form
-        //Close modal
-        //Att app//2:05;05
+
+        try {
+            Form.validateFields();
+            Form.formatValues();
+        } catch (error) {
+            alert(error.message)
+        }
     }
 }
 
