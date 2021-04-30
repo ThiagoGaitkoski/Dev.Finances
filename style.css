@@ -80,7 +80,6 @@ button:hover{
     color: var(--red);
     border: 2px var(--red) solid;
     border-radius: 0.25rem;
-
     height: 50px;
     display: flex;
     align-items: center;

@@ -11,38 +11,37 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        id: 1,
-        description: 'Luz',
-        amount: -50000,
-        date: '23/01/2021'
-    },
-    {
-        id: 2,
-        description: 'Website',
-        amount: 500000,
-        date: '23/01/2021'
-    },
-    {
-        id: 3,
-        description: 'Internet',
-        amount: -20000,
-        date: '23/01/2021'
-    },
-    {
-        id: 4,
-        description: 'App',
-        amount: 300000,
-        date: '23/01/2021'
-    }
-]
-
 const Transaction = {
-    all: transactions,
+    all: [
+        {
+            description: 'Luz',
+            amount: -50000,
+            date: '23/01/2021'
+        },
+        {
+            description: 'Website',
+            amount: 500000,
+            date: '23/01/2021'
+        },
+        {
+            description: 'Internet',
+            amount: -20000,
+            date: '23/01/2021'
+        },
+        {
+            description: 'App',
+            amount: 300000,
+            date: '23/01/2021'
+        }
+    ],
     
     add(transaction){
         Transaction.all.push(transaction);
+
+        App.reload();
+    },
+    remove(index){
+        Transaction.all.splice(index, 1);
 
         App.reload();
     },
@@ -121,6 +120,18 @@ const Utils = {
     }
 }
 
+const Form = {
+    submit(event){
+        event.preventDefault();
+        //Validate informations
+        //Format data to save
+        //Save
+        //Delete data of form
+        //Close modal
+        //Att app//2:05;05
+    }
+}
+
 const App = {
     init(){
         Transaction.all.forEach(transaction =>{
@@ -131,15 +142,9 @@ const App = {
 
     },
     reload(){
-        DOM.clearTransactions;
+        DOM.clearTransactions();
         App.init();
     },
 }
 
-App.init;
-Transaction.add({
-    id: 9,
-    description: 'Alo',
-    amount: 14459,
-    date: '23/02/2021'
-})
+App.init();
